@@ -3,7 +3,7 @@ description: Exports Workflow Run Telemetry Trace over OLTP
 author: Inception Health
 
 runs:
-  using: node16
+  using: node20
   main: dist/index.js
 
 inputs:
@@ -22,6 +22,9 @@ inputs:
     required: false
   runId:
     description: Workflow Run ID to Export. Defaults to env.GITHUB_RUN_ID
+    required: false
+  sourceRepo:
+    description: Name of repo for which traces is to be exported
     required: false
 outputs:
   traceId:

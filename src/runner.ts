@@ -14,8 +14,11 @@ export async function run() {
   const ghToken =
     core.getInput("githubToken") || process.env.GITHUB_TOKEN || "";
   const octokit = github.getOctokit(ghToken);
+  const sourceRepo = core.getInput("sourceRepo") || ghContext.repo.repo;
+  // set GITHUB_REPOSITORY env variable to use source repo
+  process.env.GITHUB_REPOSITORY = `${ghContext.repo.owner}/${sourceRepo}`;
 
-  core.info(`Get Workflow Run Jobs for ${runId}`);
+  core.info(`Get Workflow Run Jobs for ${sourceRepo} runId: ${runId}`);
   const workflowRunJobs = await getWorkflowRunJobs(ghContext, octokit, runId);
 
   core.info(`Create Trace Provider for ${otlpEndpoint}`);
